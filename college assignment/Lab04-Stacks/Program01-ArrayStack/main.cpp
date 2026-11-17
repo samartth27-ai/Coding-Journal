@@ -2,97 +2,113 @@
  * @file main.cpp
  * @brief Static Array-based Stack Implementation in C++
  * @course IC-307D: Data Structures & Algorithms LAB
- * @author Samarth Dubey (Roll No: IC-2K25-75)
+ * @author Samarth Dubey (Roll No: IC-2K25-75
  * @institution IIPS, Devi Ahilya Vishwavidyalaya (DAVV), Indore
  */
 
-#include <iostream>
-#include <stdexcept>
 
-template <typename T, size_t CAPACITY = 100>
-class ArrayStack {
-private:
-    T data[CAPACITY];
-    int topIndex;
+#include <iostream>
+using namespace std;
+
+#define SIZE 5
+
+class Stack {
+    int arr[SIZE];
+    int top;
 
 public:
-    ArrayStack() : topIndex(-1) {}
-
-    bool isEmpty() const {
-        return topIndex == -1;
+    Stack() {
+        top = -1;
     }
 
-    bool isFull() const {
-        return topIndex == static_cast<int>(CAPACITY) - 1;
-    }
-
-    int size() const {
-        return topIndex + 1;
-    }
-
-    void push(const T& element) {
-        if (isFull()) {
-            throw std::overflow_error("Stack Overflow: Maximum capacity reached.");
+    // Insert element
+    void push(int x) {
+        if (top == SIZE - 1) {
+            cout << "Stack Overflow!" << endl;
+        } else {
+            top++;
+            arr[top] = x;
+            cout << x << " pushed into stack" << endl;
         }
-        data[++topIndex] = element;
-        std::cout << "[Push] " << element << " (Size: " << size() << ")\n";
     }
 
-    T pop() {
-        if (isEmpty()) {
-            throw std::underflow_error("Stack Underflow: Attempted to pop from an empty stack.");
+    // Remove element
+    void pop() {
+        if (top == -1) {
+            cout << "Stack Underflow!" << endl;
+        } else {
+            cout << arr[top] << " popped from stack" << endl;
+            top--;
         }
-        T val = data[topIndex--];
-        std::cout << "[Pop]  " << val << " (Remaining Size: " << size() << ")\n";
-        return val;
     }
 
-    T peek() const {
-        if (isEmpty()) {
-            throw std::underflow_error("Stack is empty. Cannot peek.");
+    // Display top element
+    void peek() {
+        if (top == -1) {
+            cout << "Stack is Empty!" << endl;
+        } else {
+            cout << "Top element: " << arr[top] << endl;
         }
-        return data[topIndex];
     }
 
-    void display() const {
-        if (isEmpty()) {
-            std::cout << "Stack is empty.\n";
-            return;
+    // Display stack
+    void display() {
+        if (top == -1) {
+            cout << "Stack is Empty!" << endl;
+        } else {
+            cout << "Stack elements: ";
+            for (int i = top; i >= 0; i--) {
+                cout << arr[i] << " ";
+            }
+            cout << endl;
         }
-        std::cout << "Stack (Top to Bottom): [ ";
-        for (int i = topIndex; i >= 0; --i) {
-            std::cout << data[i] << " ";
-        }
-        std::cout << "]\n";
     }
 };
 
 int main() {
-    std::cout << "========================================================\n";
-    std::cout << " IC-307D Data Structures LAB - Array Stack Program\n";
-    std::cout << " Student: Samarth Dubey | Roll No: IC-2K25-75\n";
-    std::cout << "========================================================\n\n";
+    Stack s;
+    int choice, value;
 
-    try {
-        ArrayStack<int, 5> s;
-        s.push(10);
-        s.push(20);
-        s.push(30);
-        s.display();
+    do {
+        cout << "\n--- STACK MENU ---" << endl;
+        cout << "1. Push" << endl;
+        cout << "2. Pop" << endl;
+        cout << "3. Peek" << endl;
+        cout << "4. Display" << endl;
+        cout << "5. Exit" << endl;
 
-        std::cout << "Top element (peek): " << s.peek() << "\n\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
 
-        s.pop();
-        s.display();
+        switch (choice) {
+            case 1:
+                cout << "Enter value: ";
+                cin >> value;
+                s.push(value);
+                break;
 
-        s.push(40);
-        s.push(50);
-        s.push(60); // Stack will be full
-        s.display();
+            case 2:
+                s.pop();
+                break;
 
-    } catch (const std::exception& ex) {
-        std::cerr << "Exception: " << ex.what() << "\n";
-    }
+            case 3:
+                s.peek();
+                break;
+
+            case 4:
+                s.display();
+                break;
+
+            case 5:
+                cout << "Exiting..." << endl;
+                break;
+
+            default:
+                cout << "Invalid choice!" << endl;
+        }
+
+    } while (choice != 5);
 
     return 0;
 }
+
