@@ -1,0 +1,24 @@
+@startuml StackUndoRedo
+title Dual Stack Command Pattern (Undo / Redo Buffer)
+
+actor User
+participant TextEditor
+participant "undoStack : Stack<Command>" as UndoStack
+participant "redoStack : Stack<Command>" as RedoStack
+participant "document : String" as Doc
+
+User -> TextEditor : executeCommand(Type "Algorithms")
+TextEditor -> Doc : append("Algorithms")
+TextEditor -> UndoStack : push(TypeCommand)
+TextEditor -> RedoStack : clear()
+
+User -> TextEditor : undo()
+UndoStack -> TextEditor : pop()
+TextEditor -> Doc : erase("Algorithms")
+TextEditor -> RedoStack : push(TypeCommand)
+
+User -> TextEditor : redo()
+RedoStack -> TextEditor : pop()
+TextEditor -> Doc : append("Algorithms")
+TextEditor -> UndoStack : push(TypeCommand)
+@enduml

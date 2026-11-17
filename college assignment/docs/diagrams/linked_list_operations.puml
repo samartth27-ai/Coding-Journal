@@ -1,0 +1,26 @@
+@startuml LinkedListOperations
+title Three-Pointer In-Place Reversal of Singly Linked List
+
+state "Step 0: Initial State" as S0 {
+    state "prev = NULL" as P0
+    state "curr = Node(10)" as C0
+    state "next = Node(20)" as N0
+}
+
+state "Step 1: Point curr->next to prev" as S1 {
+    state "Node(10)->next = NULL" as C1
+}
+
+state "Step 2: Advance prev to curr" as S2 {
+    state "prev = Node(10)" as P2
+}
+
+state "Step 3: Advance curr to nextNode" as S3 {
+    state "curr = Node(20)" as C3
+}
+
+S0 --> S1 : curr->next = prev
+S1 --> S2 : prev = curr
+S2 --> S3 : curr = nextNode
+S3 --> S0 : Loop until curr == NULL
+@enduml

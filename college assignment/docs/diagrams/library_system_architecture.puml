@@ -1,0 +1,36 @@
+@startuml LibrarySystemArchitecture
+skinparam monochrome false
+skinparam roundcorner 10
+skinparam classBackgroundColor #F4F6F9
+skinparam classBorderColor #2C3E50
+
+package "Capstone Architecture: Smart Library System" {
+    class SmartLibrarySystem {
+        - head: Book*
+        - transactionHistory: stack<LibraryTransaction>
+        + addBook(isbn, title, author): void
+        + issueBook(isbn): bool
+        + returnBook(isbn): bool
+        + undoLastTransaction(): void
+        + sortCatalogByTitle(): void
+        + displayCatalog(): void
+    }
+
+    class Book <<Singly Linked Node>> {
+        + isbn: int
+        + title: string
+        + author: string
+        + isAvailable: bool
+        + next: Book*
+    }
+
+    class LibraryTransaction <<LIFO Stack Frame>> {
+        + type: ActionType (ISSUE/RETURN)
+        + isbn: int
+        + bookTitle: string
+    }
+
+    SmartLibrarySystem "1" *-- "0..*" Book : manages linked list >
+    SmartLibrarySystem "1" *-- "0..*" LibraryTransaction : tracks via stack >
+}
+@enduml
