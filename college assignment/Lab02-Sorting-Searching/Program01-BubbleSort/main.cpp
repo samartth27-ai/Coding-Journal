@@ -8,7 +8,7 @@ using namespace std;
 int main() {
     int arr[5] = {5, 3, 4, 1, 2};
 
-    // Bubble Sort
+    
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 4 - i; j++) {
 
@@ -20,7 +20,7 @@ int main() {
         }
     }
 
-    // Print sorted array
+   
     cout << "Sorted Array: ";
 
     for (int i = 0; i < 5; i++) {
